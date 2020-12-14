@@ -8,14 +8,14 @@ def save_resized_image(path, HR_image_size, LR_image_size):
     img = Image.open(path)
     resized = torch_resize(img, HR_image_size)
     HR = torch_five_crop(resized, HR_image_size)[-1]
-    HR.save(path[:-4] + "_resized_HR.png", "PNG")
+    HR.save(path[:-4] + "_resized_HR.bmp", "BMP")
     LR = torch_resize(HR, LR_image_size)
-    LR.save(path[:-4] + "_resized_LR.png", "PNG")
+    LR.save(path[:-4] + "_resized_LR.bmp", "BMP")
 
 
-images = get_fingerprint_images_list('/home/sadegh/Fingerprint_files/sd09/', load_cropped=True)
+images = get_fingerprint_images_list('/scratch2/dsoellinger/RealScan/', load_cropped=True, img_ext='.bmp')
 for idx, image in enumerate(images):
-    if not image.endswith('_cropped.png'):
+    if not image.endswith('_cropped.bmp'):
         print(image)
         continue
     save_resized_image(image, 256, 64)
